@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.dto.RegisterRequest;
@@ -24,8 +25,8 @@ public class AuthServiceImpl implements AuthService{
 	@Autowired
 	private UserRepository userRepository;
 	
-//	@Autowired
-//	private BCryptPasswordEncoder passwordEncoder;
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
 	
 	@Override
 	public RegisterResponse registerUser(@Valid RegisterRequest registerRequest) {
@@ -39,7 +40,7 @@ public class AuthServiceImpl implements AuthService{
 		ModelMapper modal = new ModelMapper();
 		User user = modal.map(registerRequest, User.class);
 		
-//		user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
+		user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
 		user.setRole(Role.USER);
 		
 		User savedUser = userRepository.save(user);
