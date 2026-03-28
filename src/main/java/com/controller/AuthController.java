@@ -34,7 +34,7 @@ public class AuthController {
 
 	@Operation(summary = "Register a new user", description = "Registers a new user with the provided details.")
 	@PostMapping("/register")
-	public ResponseEntity<RegisterResponse> register(@Valid @RequestBody RegisterRequest registerRequest) {
+	public ResponseEntity<RegisterResponse> registerUser(@Valid @RequestBody RegisterRequest registerRequest) {
 
 		log.debug("Register Request: " + registerRequest);
 
@@ -51,15 +51,6 @@ public class AuthController {
 		return ResponseEntity.status(HttpStatus.OK).
 				body(authService.userLogin(authRequest));
 		
-	}
-	
-	@GetMapping("/usersinfo")
-	public ResponseEntity<?> getUsers(){
-		
-		List<User> user = authService.getUsers();
-		
-		return ResponseEntity.status(HttpStatus.OK).
-				body(user);
 	}
 
 }

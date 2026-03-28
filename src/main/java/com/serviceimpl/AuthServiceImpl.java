@@ -93,13 +93,6 @@ public class AuthServiceImpl implements AuthService{
 		return AuthResponse.builder().userId(authenticatedUser.getId().toString()).token(jwtToken).
 				expiryAt(currentDate.plusMillis(jwtService.getExpirationTime()).toString()).build();
 	}
-	
-	@Override
-	public List<User> getUsers() {
-		
-		List<User> u =userRepository.findAll();
-		
-		return u;
-	}
+
 
 }

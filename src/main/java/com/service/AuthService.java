@@ -14,8 +14,6 @@ public interface AuthService {
 
 	RegisterResponse registerUser(@Valid RegisterRequest registerRequest);
 
-	List<User> getUsers();
-
 	AuthResponse userLogin(@Valid AuthRequest authRequest);
 
 }
