@@ -18,6 +18,7 @@ import com.dto.RegisterResponse;
 import com.entity.User;
 import com.service.AuthService;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
@@ -31,6 +32,7 @@ public class AuthController {
 	@Autowired
 	private AuthService authService;
 
+	@Operation(summary = "Register a new user", description = "Registers a new user with the provided details.")
 	@PostMapping("/register")
 	public ResponseEntity<RegisterResponse> register(@Valid @RequestBody RegisterRequest registerRequest) {
 
@@ -40,6 +42,7 @@ public class AuthController {
 				body(authService.registerUser(registerRequest));
 	}
 	
+	@Operation(summary = "Login existing user", description = "Login existing user with details.")
 	@PostMapping("/login")
 	public ResponseEntity<AuthResponse> userLogin(@Valid @RequestBody AuthRequest authRequest){
 		
