@@ -1,13 +1,14 @@
 package com.entity;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
-import com.enums.Role;
+import com.enums.RoleEnum;
+import com.security.CustomUserDetails;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -16,15 +17,26 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 
 @Entity
 @Data
-public class User implements UserDetails{
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@Slf4j
+public class User implements CustomUserDetails{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Long id;
 	
 	@Column(nullable = false)
     private String firstName;
@@ -38,13 +50,18 @@ public class User implements UserDetails{
     @Column(nullable = false)
     private String password;
     
-    @Enumerated(EnumType.STRING)
-    private Role role;
+    @ManyToOne
+	@ToString.Exclude
+	@JoinColumn(name = "role_Id", referencedColumnName = "id", nullable = false)
+	private Role role;
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_" + role.name()));
-    }
+  //UserDetails implemenmted methods
+  	@Override
+  	public Collection<? extends GrantedAuthority> getAuthorities() {
+  		log.debug("getAuthorities()");
+  		SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + role.getRolename().toString());
+  		return Collections.singletonList(authority);
+  	}
     
     @Override
     public String getUsername() {

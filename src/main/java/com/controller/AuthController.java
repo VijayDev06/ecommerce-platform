@@ -11,7 +11,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.dto.AuthRequest;
+import com.dto.AuthResponse;
 import com.dto.RegisterRequest;
+import com.dto.RegisterResponse;
 import com.entity.User;
 import com.service.AuthService;
 
@@ -29,12 +32,22 @@ public class AuthController {
 	private AuthService authService;
 
 	@PostMapping("/register")
-	public ResponseEntity<?> register(@Valid @RequestBody RegisterRequest registerRequest) {
+	public ResponseEntity<RegisterResponse> register(@Valid @RequestBody RegisterRequest registerRequest) {
 
 		log.debug("Register Request: " + registerRequest);
 
 		return ResponseEntity.status(HttpStatus.CREATED).
 				body(authService.registerUser(registerRequest));
+	}
+	
+	@PostMapping("/login")
+	public ResponseEntity<AuthResponse> userLogin(@Valid @RequestBody AuthRequest authRequest){
+		
+		log.debug("Auth Request: " + authRequest);
+		
+		return ResponseEntity.status(HttpStatus.OK).
+				body(authService.userLogin(authRequest));
+		
 	}
 	
 	@GetMapping("/usersinfo")

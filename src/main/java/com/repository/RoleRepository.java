@@ -5,11 +5,12 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.entity.User;
+import com.entity.Role;
+import com.enums.RoleEnum;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long>{
+public interface RoleRepository extends JpaRepository<Role, Long> {
 	
-	Optional<User> findByEmail(String email);
+	Optional<Role> findByRolename(RoleEnum rolename);
 
 }

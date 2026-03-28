@@ -1,8 +1,8 @@
 package com.security;
 
-import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UserDetails;
 
-public interface CustomUserDetails extends UserDetailsService {
+public interface CustomUserDetails extends UserDetails {
 	
 	
 	String getEmail();
