@@ -19,16 +19,16 @@ public class OrderItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-//    @ManyToOne
-//    @JoinColumn(name = "order_id")
-//    private Order order;
+    @ManyToOne
+    @JoinColumn(name = "order_id")
+    private Order order;
     
-//    @ManyToOne
-//    @JoinColumn(name = "product_id")
-//    private Product product;
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
     
     @NotNull(message = "Quantity is required")
-    @Min(value = 0, message = "Quantity cannot be negative")
+    @Min(value = 1, message = "Quantity cannot be negative")
     private Integer quantity;
     
     @NotNull(message = "Price is required")
