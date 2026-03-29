@@ -94,5 +94,28 @@ public class AuthServiceImpl implements AuthService{
 				expiryAt(currentDate.plusMillis(jwtService.getExpirationTime()).toString()).build();
 	}
 
+	@Override
+	public RegisterResponse createAdministrator(RegisterRequest registerRequest) {
+		
+		userRepository.findByEmail(registerRequest.getEmail()).ifPresent((user) -> {
+			throw new ResourceFoundException("User with this email already exists");
+		});
+		
+		Role role = roleRepository.findByRolename(RoleEnum.ADMIN).get();
+
+		ModelMapper map = new ModelMapper();
+		User user = map.map(registerRequest, User.class);
+		
+		user.setRole(role);
+		user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
+
+
+		User savedUser = userRepository.save(user);
+
+		RegisterResponse registerResponse = map.map(savedUser, RegisterResponse.class);
+
+		return registerResponse;
+	}
+
 
 }

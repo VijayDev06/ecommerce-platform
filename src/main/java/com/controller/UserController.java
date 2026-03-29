@@ -21,6 +21,7 @@ import com.service.UserService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
@@ -42,7 +43,7 @@ public class UserController {
 		return ResponseEntity.ok(userService.getAuthenticatedUser());
 	}
 
-	@Operation(summary = "Update User", description = "Updates the user details.")
+	@Operation(summary = "Update User", description = "Update logged-in user details")
 	@PreAuthorize("hasRole('USER')")
 	@PutMapping("/updateUser")
 	public ResponseEntity<RegisterResponse> updateUser(@Validated @RequestBody RegisterRequest registerRequest) {
@@ -50,6 +51,23 @@ public class UserController {
 		return ResponseEntity.ok(userService.updateUser(registerRequest));
 	}
 
+	@Operation(summary = "Get User by ID", description = "Fetch user by ID")
+	@PreAuthorize("hasRole('ADMIN')")
+	@GetMapping("/{id}")
+	public ResponseEntity<UserResponse> getUserById(@Valid @PathVariable Long id) {
+		
+		return ResponseEntity.ok(userService.getUserById(id));
+	}
+	
+	@Operation(summary = "Get All User", description = "Get All User tails.")
+	@PreAuthorize("hasRole('ADMIN')")
+	@GetMapping("/getAllUsers")
+	public ResponseEntity<List<UserResponse>> getAllUsers() {
+
+		return ResponseEntity.ok(userService.getAllUsers());
+	}
+
+	@Operation(summary = "delere User by ID", description = "Selete the user.")
 	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> deleteUser(@PathVariable Long id) {
@@ -59,11 +77,6 @@ public class UserController {
 		return ResponseEntity.ok("User deleted successfully");
 	}
 
-	@PreAuthorize("hasRole('USER')")
-	@GetMapping("/getAllUsers")
-	public ResponseEntity<List<UserResponse>> getAllUsers() {
-		
-		return ResponseEntity.ok(userService.getAllUsers());
-	}
+	
 
 }

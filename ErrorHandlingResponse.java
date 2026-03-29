@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Validated
 public class ErrorHandlingResponse {
-	
+
 	private String msg;
 
 }

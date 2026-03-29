@@ -19,12 +19,7 @@ public class GlobalExceptions {
 	@ExceptionHandler(ResourceFoundException.class)
 	private ResponseEntity<ErrorHandlingResponse> handleAllErrors(ResourceFoundException re) {
 
-		return new ResponseEntity<>(ErrorHandlingResponse.builder().msg(re.getMessage()).build(), HttpStatus.CONFLICT); // 409
-																														// -
-																														// Duplicate
-																														// /
-																														// already
-																														// exists
+		return new ResponseEntity<>(ErrorHandlingResponse.builder().msg(re.getMessage()).build(), HttpStatus.CONFLICT); 
 	}
 
 	@ExceptionHandler(value = MethodArgumentNotValidException.class)

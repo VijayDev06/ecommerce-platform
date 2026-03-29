@@ -74,17 +74,7 @@ public class UserServiceImpl implements UserService {
 
 		return rr;
 	}
-
-	@Override
-	public void deleteUser(Long id) {
-		
-		User user = userRepository.findById(id)
-	            .orElseThrow(() -> new ResourceNotFoundException("User not found"));
-
-	    userRepository.delete(user);
-		
-	}
-
+	
 	@Override
 	public List<UserResponse> getAllUsers() {
 		
@@ -99,6 +89,31 @@ public class UserServiceImpl implements UserService {
 		
 		return ur;
 	}
+	
+	@Override
+    public UserResponse getUserById(Long id) {
+
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        
+        ModelMapper map = new ModelMapper();
+		UserResponse ur = map.map(user, UserResponse.class);
+		
+        return ur;
+    }
+
+
+	@Override
+	public void deleteUser(Long id) {
+		
+		User user = userRepository.findById(id)
+	            .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+	    userRepository.delete(user);
+		
+	}
+
+	
 	
 	
 

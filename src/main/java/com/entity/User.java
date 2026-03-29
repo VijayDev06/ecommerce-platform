@@ -1,7 +1,6 @@
 package com.entity;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -56,12 +55,14 @@ public class User implements CustomUserDetails{
 	private Role role;
 
   //UserDetails implemenmted methods
-  	@Override
-  	public Collection<? extends GrantedAuthority> getAuthorities() {
-  		log.debug("getAuthorities()");
-  		SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + role.getRolename().toString());
-  		return Collections.singletonList(authority);
-  	}
+    
+    @Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		log.debug("getAuthorities()");
+		SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + role.getRolename().toString());
+		return List.of(authority);
+	}
+
     
     @Override
     public String getUsername() {
