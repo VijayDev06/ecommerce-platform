@@ -8,6 +8,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import com.enums.OrderStatus;
 import com.enums.PaymentStatus;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -21,6 +22,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
+import lombok.ToString;
 
 @Entity
 @Data
@@ -33,9 +35,12 @@ public class Order {
     
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonIgnore
     private User user;
     
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    @JsonIgnore
+    @ToString.Exclude
     private List<OrderItem> items = new ArrayList<>();
     
     private Double totalAmount;

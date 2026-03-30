@@ -7,6 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import com.enums.RoleEnum;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.security.CustomUserDetails;
 
 import jakarta.persistence.CascadeType;
@@ -58,9 +59,12 @@ public class User implements CustomUserDetails{
 	private Role role;
     
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnore
+	@ToString.Exclude
     private List<Order> orders;
     
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+	@ToString.Exclude
     private Cart cart;
 
     

@@ -70,7 +70,7 @@ public class CartServiceImpl implements CartService {
             item.setCart(cart);
             item.setProduct(product);
             item.setQuantity(request.getQuantity());
-            item.setPrice(product.getPrice());
+            item.setPrice(product.getPrice() * item.getQuantity());
 
             cartItemRepository.save(item);
         }
